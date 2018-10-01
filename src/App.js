@@ -4,7 +4,20 @@ import './App.css';
 import interact from 'interactjs';
 
 class App extends Component {
+
+  state = {
+    selected: '',
+    positions: {
+      icon1: {
+        x: 0,
+        y: 0,
+        theta: 0
+      }
+    }
+  }
+
   render() {
+    let { x, y, theta } = this.state.positions.icon1
     return (
       <div className="App">
         <header className="App-header">
@@ -15,36 +28,62 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div className="resize-container">
-          <div className="resize-drag" onDrag={this.handleMove} id="find"></div>
-          <div className="resize-drag" onDrag={this.handleMove}></div>
-          <div className="resize-drag" onDrag={this.handleMove}></div>
-          <div className="resize-drag" onDrag={this.handleMove}></div>
+          <div className="resize-drag" onClick={this.selectIcon} onDrag={this.handleMove} style={{ transform: `translate(${x}px, ${y}px` }} id="icon1" data-x={x} data-y={y}>
+            {/* <button className="rotate">R</button> */}
+          </div>
+          {/* <div className="resize-drag" onClick={this.selectIcon} onDrag={this.handleMove} id="icon2"></div> */}
+          {/* <div className="resize-drag" onDrag={this.handleMove}></div>
+          <div className="resize-drag" onDrag={this.handleMove}></div> */}
         </div>
+        <button onClick={this.rotate}>rotate clockwise</button>
       </div>
     );
+  }
+
+  rotate = () => {
+    let element = document.getElementById(this.state.selected)
+    element.style.transform = "rotate(7deg)"
+    console.log(element.textContent)
+  }
+
+  selectIcon = (event) => {
+    this.setState({
+      selected: event.target.id
+    })
+  }
+
+  dragMoveListener = (event) => {
+    var target = event.target;
+    let icon = event.target.id
+    let state = this.state
+    let { x, y, theta } = state.positions[icon]
+    // keep the dragged position in the data-x/data-y attributes
+    x = (parseFloat(target.getAttribute('data-x')) || x) + event.dx;
+    y = (parseFloat(target.getAttribute('data-y')) || y) + event.dy;
+    // translate the element
+    // target.style.webkitTransform =
+    //   target.style.transform =
+    //   'translate(' + x + 'px, ' + y + 'px)';
+
+    // // update the posiion attributes
+    // target.setAttribute('data-x', x);
+    // target.setAttribute('data-y', y);
+    console.log(x, y)
+    let newIconPos = { ...state.positions[icon], x, y }
+    let newPositions = { ...state.positions, [icon]: newIconPos }
+    this.setState({
+      positions: newPositions
+    })
   }
 
   handleMove = (event) => {
     // console.log(event.target)
     // event.target.style.position = 'absolute'
-    function dragMoveListener(event) {
-      var target = event.target,
-        // keep the dragged position in the data-x/data-y attributes
-        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-      // translate the element
-      target.style.webkitTransform =
-        target.style.transform =
-        'translate(' + x + 'px, ' + y + 'px)';
 
-      // update the posiion attributes
-      target.setAttribute('data-x', x);
-      target.setAttribute('data-y', y);
-    }
 
     interact(".resize-drag")
       .draggable({
-        onmove: dragMoveListener,
+        onmove: this.dragMoveListener,
         restrict: {
           restriction: 'parent',
           elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
@@ -52,7 +91,7 @@ class App extends Component {
       })
       .resizable({
         // resize from all edges and corners
-        edges: { left: true, right: true, bottom: true, top: true },
+        edges: { left: false, right: true, bottom: true, top: false },
 
         // keep the edges inside the parent
         restrictEdges: {
