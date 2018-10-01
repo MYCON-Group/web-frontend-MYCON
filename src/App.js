@@ -28,7 +28,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div className="resize-container">
-          <div className="resize-drag" onClick={this.selectIcon} onDrag={this.handleMove} style={{ transform: `translate(${x}px, ${y}px` }} id="icon1" data-x={x} data-y={y}>
+          <div className="resize-drag" onClick={this.selectIcon} onDrag={this.handleMove} style={{ transform: `translate(${x}px, ${y}px) rotate(${theta}deg)` }} id="icon1" data-x={x} data-y={y}>
             {/* <button className="rotate">R</button> */}
           </div>
           {/* <div className="resize-drag" onClick={this.selectIcon} onDrag={this.handleMove} id="icon2"></div> */}
@@ -41,9 +41,13 @@ class App extends Component {
   }
 
   rotate = () => {
-    let element = document.getElementById(this.state.selected)
-    element.style.transform = "rotate(7deg)"
-    console.log(element.textContent)
+    let icon = this.state.selected
+    const { positions } = this.state
+    let newIconPos = { ...positions[icon], theta: positions[icon].theta + 10 }
+    let newPositions = { ...this.state.positions, [icon]: newIconPos }
+    this.setState({
+      positions: newPositions
+    })
   }
 
   selectIcon = (event) => {
@@ -60,12 +64,10 @@ class App extends Component {
     // keep the dragged position in the data-x/data-y attributes
     x = (parseFloat(target.getAttribute('data-x')) || x) + event.dx;
     y = (parseFloat(target.getAttribute('data-y')) || y) + event.dy;
-    // translate the element
     // target.style.webkitTransform =
     //   target.style.transform =
     //   'translate(' + x + 'px, ' + y + 'px)';
 
-    // // update the posiion attributes
     // target.setAttribute('data-x', x);
     // target.setAttribute('data-y', y);
     console.log(x, y)
@@ -79,8 +81,6 @@ class App extends Component {
   handleMove = (event) => {
     // console.log(event.target)
     // event.target.style.position = 'absolute'
-
-
     interact(".resize-drag")
       .draggable({
         onmove: this.dragMoveListener,
