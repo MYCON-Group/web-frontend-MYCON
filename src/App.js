@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import interact from 'interactjs';
+import Map from './components/Map'
+import StallInfoDisplay from './components/StallInfoDisplay';
 
 class App extends Component {
 
@@ -26,20 +27,10 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <div className="resize-container">
-          <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions.icon1.x}px, ${positions.icon1.y}px) rotate(${positions.icon1.theta}deg)` }} id="icon1" data-x={positions.icon1.x} data-y={positions.icon1.y}>
-          </div>
-          <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions.icon2.x}px, ${positions.icon2.y}px) rotate(${positions.icon2.theta}deg)` }} id="icon2" data-x={positions.icon2.x} data-y={positions.icon2.y}>
-          </div>
-          <img src="http://denverconvention.com/uploads/content/Exhibit_Map.jpg" alt="" />
-        </div>
-        <button onClick={this.rotate}>rotate clockwise</button>
+        <Map handleMove={this.handleMove} positions={this.state.positions} />
+        <StallInfoDisplay rotate={this.rotate} />
       </div>
     );
   }
