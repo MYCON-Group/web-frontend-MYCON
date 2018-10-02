@@ -12,33 +12,36 @@ class App extends Component {
       icon1: {
         x: 0,
         y: 0,
-        theta: 0
+        theta: 0,
+        h: 25,
+        w: 25
       },
       icon2: {
         x: 0,
         y: 0,
-        theta: 0
+        theta: 0,
+        h: 25,
+        w: 25
       }
     }
   }
 
   render() {
-    let { positions } = this.state
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <Map handleMove={this.handleMove} positions={this.state.positions} />
-        <StallInfoDisplay rotate={this.rotate} />
+        <StallInfoDisplay rotate={this.rotate} positions={this.state.positions} />
       </div>
     );
   }
 
-  rotate = () => {
+  rotate = (clockwise) => {
     let icon = this.state.selected
     const { positions } = this.state
-    let newIconPos = { ...positions[icon], theta: positions[icon].theta + 10 }
+    let newIconPos = { ...positions[icon], theta: clockwise ? positions[icon].theta + 10 : positions[icon].theta - 10 }
     let newPositions = { ...this.state.positions, [icon]: newIconPos }
     this.setState({
       positions: newPositions
@@ -49,8 +52,8 @@ class App extends Component {
     var target = event.target;
     let icon = event.target.id
     let state = this.state
-    let { x, y, theta } = state.positions[icon]
-    // keep the dragged position in the data-x/data-y attributes
+    let { x, y } = state.positions[icon]
+
     x = (parseFloat(target.getAttribute('data-x')) || x) + event.dx;
     y = (parseFloat(target.getAttribute('data-y')) || y) + event.dy;
 
@@ -59,6 +62,17 @@ class App extends Component {
     this.setState({
       positions: newPositions
     })
+  }
+
+  resizeListener = (event) => {
+    const icon = event.target.id;
+    const { positions } = this.state;
+    let newIconPos = { ...positions[icon], w: event.rect.width, h: event.rect.height }
+    let newPositions = { ...positions, [icon]: newIconPos }
+    this.setState({
+      positions: newPositions
+    })
+    // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
   }
 
   handleMove = (event) => {
@@ -90,13 +104,7 @@ class App extends Component {
 
         inertia: true,
       })
-      .on('resizemove', function (event) {
-        var target = event.target
-
-        target.style.width = event.rect.width + 'px';
-        target.style.height = event.rect.height + 'px';
-        // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
-      });
+      .on('resizemove', this.resizeListener);
   }
 
 }
