@@ -33,7 +33,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <Map handleMove={this.handleMove} positions={this.state.positions} />
-        <StallInfoDisplay rotate={this.rotate} positions={this.state.positions} />
+        <StallInfoDisplay rotate={this.rotate} selectedStall={this.state.positions[this.state.selected]} stallName={this.state.selected} />
       </div>
     );
   }

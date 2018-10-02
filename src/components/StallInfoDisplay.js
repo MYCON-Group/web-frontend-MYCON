@@ -2,14 +2,15 @@ import React from 'react';
 
 const StallInfoDisplay = (props) => {
 
-  const { rotate, positions } = props
+  const { rotate, selectedStall, stallName } = props
   return (
-    <div id="info-container">
-      <div id="height"></div>
-      <div id="width"></div>
+    stallName ? <div id="info-container">
+      <div id="stall-name">{stallName}</div>
+      <div id="height">{selectedStall.h}</div>
+      <div id="width">{selectedStall.w}</div>
       <button onClick={() => rotate(true)}>rotate clockwise</button>
       <button onClick={() => rotate(false)}>rotate anti-clockwise</button>
-    </div>
+    </div> : null
   );
 };
 
