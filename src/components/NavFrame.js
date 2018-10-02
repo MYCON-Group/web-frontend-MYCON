@@ -1,9 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import { withStyles, AppBar, Toolbar, Typography, Drawer, List, Divider, IconButton } from '@material-ui/core'
+import { withStyles, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Map from './Map'
 import DrawerPanel from './DrawerPanel'
 
