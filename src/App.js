@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import interact from 'interactjs';
 import Map from './components/Map'
+import NavBar from './components/NavBar'
 import StallInfoDisplay from './components/StallInfoDisplay';
 
 class App extends Component {
@@ -29,9 +30,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Map Editior</h1>
-        </header>
+        <NavBar />
         <Map handleMove={this.handleMove} positions={this.state.positions} rotate={this.rotate} selected={this.state.selected} />
         <StallInfoDisplay rotate={this.rotate} selectedStall={this.state.positions[this.state.selected]} stallName={this.state.selected} />
       </div>
