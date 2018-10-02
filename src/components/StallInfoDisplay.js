@@ -4,12 +4,12 @@ const StallInfoDisplay = (props) => {
 
   const { rotate, selectedStall, stallName } = props
   return (
-    stallName ? <div id="info-container">
+    stallName ? <div id="info-container" >
       <div id="stall-name">{stallName}</div>
       <div id="height">{selectedStall.h}</div>
       <div id="width">{selectedStall.w}</div>
-      <button onClick={() => rotate(true)}>rotate clockwise</button>
-      <button onClick={() => rotate(false)}>rotate anti-clockwise</button>
+      <button onClick={() => rotate(false)}><i className="fas fa-undo"></i></button>
+      <button onClick={() => rotate(true)}><i className="fas fa-redo"></i></button>
     </div> : null
   );
 };

@@ -30,9 +30,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Map Editior</h1>
         </header>
-        <Map handleMove={this.handleMove} positions={this.state.positions} />
+        <Map handleMove={this.handleMove} positions={this.state.positions} rotate={this.rotate} selected={this.state.selected} />
         <StallInfoDisplay rotate={this.rotate} selectedStall={this.state.positions[this.state.selected]} stallName={this.state.selected} />
       </div>
     );
