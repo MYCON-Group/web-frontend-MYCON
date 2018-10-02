@@ -32,10 +32,10 @@ class NavFrame extends React.Component {
                 <MenuIcon />
               </IconButton>
               <div className={classes.title}>
-              <Typography variant="title" color="inherit" noWrap>
-                MYCON Venue Manager Workspace
+                <Typography variant="title" color="inherit" noWrap>
+                  MYCON Venue Manager Workspace
               </Typography>
-              </div> 
+              </div>
             </Toolbar>
           </AppBar>
           <DrawerPanel open={open} handleDrawerClose={this.handleDrawerClose} />

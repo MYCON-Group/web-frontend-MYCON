@@ -3,7 +3,6 @@
   background: grey;
 }
 
-
 .App-header {
   background-color: #222;
   height: 50px;
@@ -24,7 +23,6 @@
   to { transform: rotate(360deg); }
 }
 
-
 .resize-drag {
   background-color: #29e;
   color: white;
@@ -42,6 +40,7 @@
   -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
 box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+z-index: 10;
 }
 
 #info-container {
@@ -62,7 +61,9 @@ box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
 }
 
 .resize-container {
+
   display: inline-block;
+  margin-top: 50px;
   /* width: 800px;
   height: 500px; */
   background: grey;
@@ -70,14 +71,12 @@ box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
   background-size: cover; */
 }
 
-/* img {
-  height: 100%
-} */
+img {
+  height: 100%;
+  
+  z-index: 0;
+} 
 
 .nav-item {
   display: inline;
-}
-
-.fa-calendar-alt {
-  
 }
