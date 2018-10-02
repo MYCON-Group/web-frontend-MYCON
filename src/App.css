@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background: grey;
 }
 
 .App-logo {
@@ -33,9 +34,9 @@
   color: white;
   font-size: 20px;
   font-family: sans-serif;
-  border-radius: 8px;
-  padding: 20px;
-
+  border-radius: 1px;
+  padding: 1px;
+  font-weight: 0;
   /* margin: 30px 20px; */
   position: absolute;
   width: 50px;
@@ -46,11 +47,17 @@
 
 .resize-container {
   display: inline-block;
-  width: 800px;
-  height: 500px;
+  /* width: 800px;
+  height: 500px; */
   background: grey;
+  /* background-image: url("http://denverconvention.com/uploads/content/Exhibit_Map.jpg");
+  background-size: cover; */
 }
 
 .rotate {
   z-index: 10;
 }
+
+/* img {
+  height: 100%
+} */

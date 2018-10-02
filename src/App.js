@@ -12,12 +12,17 @@ class App extends Component {
         x: 0,
         y: 0,
         theta: 0
+      },
+      icon2: {
+        x: 0,
+        y: 0,
+        theta: 0
       }
     }
   }
 
   render() {
-    let { x, y, theta } = this.state.positions.icon1
+    let { positions } = this.state
     return (
       <div className="App">
         <header className="App-header">
@@ -28,12 +33,11 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div className="resize-container">
-          <div className="resize-drag" onClick={this.selectIcon} onDrag={this.handleMove} style={{ transform: `translate(${x}px, ${y}px) rotate(${theta}deg)` }} id="icon1" data-x={x} data-y={y}>
-            {/* <button className="rotate">R</button> */}
+          <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions.icon1.x}px, ${positions.icon1.y}px) rotate(${positions.icon1.theta}deg)` }} id="icon1" data-x={positions.icon1.x} data-y={positions.icon1.y}>
           </div>
-          {/* <div className="resize-drag" onClick={this.selectIcon} onDrag={this.handleMove} id="icon2"></div> */}
-          {/* <div className="resize-drag" onDrag={this.handleMove}></div>
-          <div className="resize-drag" onDrag={this.handleMove}></div> */}
+          <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions.icon2.x}px, ${positions.icon2.y}px) rotate(${positions.icon2.theta}deg)` }} id="icon2" data-x={positions.icon2.x} data-y={positions.icon2.y}>
+          </div>
+          <img src="http://denverconvention.com/uploads/content/Exhibit_Map.jpg" alt="" />
         </div>
         <button onClick={this.rotate}>rotate clockwise</button>
       </div>
@@ -50,12 +54,6 @@ class App extends Component {
     })
   }
 
-  selectIcon = (event) => {
-    this.setState({
-      selected: event.target.id
-    })
-  }
-
   dragMoveListener = (event) => {
     var target = event.target;
     let icon = event.target.id
@@ -64,13 +62,7 @@ class App extends Component {
     // keep the dragged position in the data-x/data-y attributes
     x = (parseFloat(target.getAttribute('data-x')) || x) + event.dx;
     y = (parseFloat(target.getAttribute('data-y')) || y) + event.dy;
-    // target.style.webkitTransform =
-    //   target.style.transform =
-    //   'translate(' + x + 'px, ' + y + 'px)';
 
-    // target.setAttribute('data-x', x);
-    // target.setAttribute('data-y', y);
-    console.log(x, y)
     let newIconPos = { ...state.positions[icon], x, y }
     let newPositions = { ...state.positions, [icon]: newIconPos }
     this.setState({
@@ -79,8 +71,9 @@ class App extends Component {
   }
 
   handleMove = (event) => {
-    // console.log(event.target)
-    // event.target.style.position = 'absolute'
+    this.setState({
+      selected: event.target.id
+    })
     interact(".resize-drag")
       .draggable({
         onmove: this.dragMoveListener,
@@ -101,44 +94,17 @@ class App extends Component {
 
         // minimum size
         restrictSize: {
-          min: { width: 50, height: 50 },
+          min: { width: 5, height: 5 },
         },
 
         inertia: true,
       })
-      .gesturable({
-        onmove: function (event) {
-          var box = event.target;
-          let angle;
-          angle += event.da;
-
-          box.style.webkitTransform =
-            box.style.transform =
-            'rotate(' + angle + 'deg)';
-
-          // document.getElementById('angle-info').textContent =
-          //   angle.toFixed(2) + '&Acirc;&deg;';
-        }
-      })
       .on('resizemove', function (event) {
-        var target = event.target,
-          x = (parseFloat(target.getAttribute('data-x')) || 0),
-          y = (parseFloat(target.getAttribute('data-y')) || 0);
+        var target = event.target
 
-        // update the element's style
         target.style.width = event.rect.width + 'px';
         target.style.height = event.rect.height + 'px';
-
-        // translate when resizing from top or left edges
-        x += event.deltaRect.left;
-        y += event.deltaRect.top;
-
-        target.style.webkitTransform = target.style.transform =
-          'translate(' + x + 'px,' + y + 'px)';
-
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-        target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
+        // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
       });
   }
 
