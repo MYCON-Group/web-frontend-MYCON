@@ -10,8 +10,8 @@ const NavBar = () => {
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link" href="#">Events</a>
-          <a class="nav-item nav-link" href="#">Map</a>
+          <Link to="/events"><div class="nav-item nav-link" >Events</div></Link>
+          <Link to="/map/dhjkasd"><div class="nav-item nav-link" >Map</div></Link>
         </div>
       </div>
     </nav>

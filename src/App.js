@@ -4,6 +4,8 @@ import interact from 'interactjs';
 import Map from './components/Map'
 import NavBar from './components/NavBar'
 import StallInfoDisplay from './components/StallInfoDisplay';
+import Events from './components/Events'
+import { Route } from 'react-router-dom'
 
 class App extends Component {
 
@@ -31,7 +33,8 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar />
-        <Map handleMove={this.handleMove} positions={this.state.positions} rotate={this.rotate} selected={this.state.selected} />
+        <Route exact path="/map/:event_id" render={() => <Map handleMove={this.handleMove} positions={this.state.positions} rotate={this.rotate} selected={this.state.selected} />} />
+        <Route exact path="/events" render={() => <Events />} />
         <StallInfoDisplay rotate={this.rotate} selectedStall={this.state.positions[this.state.selected]} stallName={this.state.selected} />
       </div>
     );
