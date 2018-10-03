@@ -4,6 +4,7 @@ import Map from './components/Map'
 import NavFrame from './components/NavFrame'
 import { Route } from 'react-router-dom'
 
+
 class App extends Component {
 
   state = {
@@ -14,10 +15,14 @@ class App extends Component {
     return (
       <div className="App">
         <NavFrame />
-        <Route exact path="/map/:event_id" component={<Map />} />
+
         {/* <StallInfoDisplay rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} /> */}
       </div>
     );
+  }
+
+  componentDidMount() {
+
   }
 }
 

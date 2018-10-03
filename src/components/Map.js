@@ -1,42 +1,67 @@
 import React, { Component } from 'react';
 import StallInfoDisplay from './StallInfoDisplay';
+import SaveButton from './SaveButton';
 import interact from 'interactjs';
+import * as api from '../api.js'
+import { isEmpty } from 'lodash';
+
 
 class Map extends Component {
   state = {
     selected: '',
-    positions: {
-      icon1: {
-        x: 0,
-        y: 0,
-        theta: 0,
-        h: 25,
-        w: 25
-      },
-      icon2: {
-        x: 0,
-        y: 0,
-        theta: 0,
-        h: 25,
-        w: 25
-      }
-    }
+    positions: {}
   }
   render() {
     let { positions, selected } = this.state
     return (
+      isEmpty(positions) ? null 
+      :
+
       <div>
         <div className="resize-container">
-          <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions.icon1.x}px, ${positions.icon1.y}px) rotate(${positions.icon1.theta}deg)`, width: `${positions.icon1.w}px`, height: `${positions.icon1.h}px` }} id="icon1" data-x={positions.icon1.x} data-y={positions.icon1.y}>
+        {Object.values(positions).map((position) => {
+          return (<div key={position.stall_id} className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${position.stall_x}px, ${position.stall_y}px) rotate(${position.stall_rotation}deg)`, width: `${position.stall_width}px`, height: `${position.stall_height}px` }} id={position.stall_id} data-x={position.stall_x} data-y={position.stall_y}>
+          {`ID: ${position.stall_id}`}
+          </div>)
+        })}
+      {/*     <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions[1].stall_x}px, ${positions[1].stall_y}px) rotate(${positions[1].stall_rotation}deg)`, width: `${positions[1].stall_width}px`, height: `${positions[1].stall_height}px` }} id="1" data-x={positions[1].stall_x} data-y={positions[1].stall_y}>
           </div>
-          <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions.icon2.x}px, ${positions.icon2.y}px) rotate(${positions.icon2.theta}deg)`, width: `${positions.icon2.w}px`, height: `${positions.icon2.h}px` }} id="icon2" data-x={positions.icon2.x} data-y={positions.icon2.y}>
-          </div>
+          <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions[2].stall_x}px, ${positions[2].stall_y}px) rotate(${positions[2].stall_rotation}deg)`, width: `${positions[2].stall_width}px`, height: `${positions[2].stall_height}px` }} id="2" data-x={positions[2].stall_x} data-y={positions[2].stall_y}>
+          </div> */}
           <img src="http://denverconvention.com/uploads/content/Exhibit_Map.jpg" alt="" />
 
         </div>
         <StallInfoDisplay rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
+        <SaveButton />
       </div>
     );
+  }
+
+  componentDidMount() {
+    const {event_id} = this.props.match.params
+    api.getMapData(event_id)
+    .then((positions) => {
+      this.setState({
+        positions
+      })
+    })
+
+
+  }
+
+  componentDidUpdate(prevProps) {
+    const {event_id} = this.props.match.params
+    if (prevProps !== this.props) {
+      api.getMapData(event_id)
+      .then((positions) => {
+        this.setState({
+          positions
+        }, () => console.log(this.state))
+      })
+    }
+
+
+
   }
 
 
@@ -44,7 +69,7 @@ class Map extends Component {
   rotate = (clockwise) => {
     let icon = this.state.selected
     const { positions } = this.state
-    let newIconPos = { ...positions[icon], theta: clockwise ? positions[icon].theta + 10 : positions[icon].theta - 10 }
+    let newIconPos = { ...positions[icon], stall_rotation: clockwise ? positions[icon].stall_rotation + 10 : positions[icon].stall_rotation - 10 }
     let newPositions = { ...this.state.positions, [icon]: newIconPos }
     this.setState({
       positions: newPositions
@@ -55,22 +80,22 @@ class Map extends Component {
     var target = event.target;
     let icon = event.target.id
     let state = this.state
-    let { x, y } = state.positions[icon]
+    let { stall_x, stall_y } = state.positions[icon]
 
-    x = (parseFloat(target.getAttribute('data-x')) || x) + event.dx;
-    y = (parseFloat(target.getAttribute('data-y')) || y) + event.dy;
+    stall_x = (parseFloat(target.getAttribute('data-x')) || stall_x) + event.dx;
+    stall_y = (parseFloat(target.getAttribute('data-y')) || stall_y) + event.dy;
 
-    let newIconPos = { ...state.positions[icon], x, y }
+    let newIconPos = { ...state.positions[icon], stall_x, stall_y }
     let newPositions = { ...state.positions, [icon]: newIconPos }
     this.setState({
       positions: newPositions
-    })
+    },() => console.log(this.state))
   }
 
   resizeListener = (event) => {
     const icon = event.target.id;
     const { positions } = this.state;
-    let newIconPos = { ...positions[icon], w: event.rect.width, h: event.rect.height }
+    let newIconPos = { ...positions[icon], stall_width: event.rect.width, stall_height: event.rect.height }
     let newPositions = { ...positions, [icon]: newIconPos }
     this.setState({
       positions: newPositions

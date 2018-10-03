@@ -1,13 +1,11 @@
 import React from 'react';
 
-const StallInfoDisplay = (props) => {
-
-  const { rotate, selectedStall, stallName } = props
+const StallInfoDisplay = ({ rotate, selectedStall, stallName }) => {
   return (
     stallName ? <div id="info-container" >
       <div id="stall-name">{stallName}</div>
-      <div id="height">{selectedStall.h}</div>
-      <div id="width">{selectedStall.w}</div>
+      <div id="height">{selectedStall.stall_height}</div>
+      <div id="width">{selectedStall.stall_width}</div>
       <button onClick={() => rotate(false)}><i className="fas fa-undo"></i></button>
       <button onClick={() => rotate(true)}><i className="fas fa-redo"></i></button>
     </div> : null
