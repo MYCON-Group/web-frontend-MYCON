@@ -14,54 +14,60 @@ class Map extends Component {
   render() {
     let { positions, selected } = this.state
     return (
-      isEmpty(positions) ? null 
-      :
+      isEmpty(positions) ? null
+        :
 
-      <div>
-        <div className="resize-container">
-        {Object.values(positions).map((position) => {
-          return (<div key={position.stall_id} className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${position.stall_x}px, ${position.stall_y}px) rotate(${position.stall_rotation}deg)`, width: `${position.stall_width}px`, height: `${position.stall_height}px` }} id={position.stall_id} data-x={position.stall_x} data-y={position.stall_y}>
-          {`ID: ${position.stall_id}`}
-          </div>)
-        })}
-      {/*     <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions[1].stall_x}px, ${positions[1].stall_y}px) rotate(${positions[1].stall_rotation}deg)`, width: `${positions[1].stall_width}px`, height: `${positions[1].stall_height}px` }} id="1" data-x={positions[1].stall_x} data-y={positions[1].stall_y}>
+        <div>
+          <div className="resize-container">
+            {Object.values(positions).map((position) => {
+              return (<div key={position.stall_id} className="resize-drag" onClick={this.handleMove}
+                style={{
+                  transform: `translate(${position.stall_x}px, ${position.stall_y}px) rotate(${position.stall_rotation}deg)`,
+                  width: `${position.stall_width}px`, height: `${position.stall_height}px`
+                }} id={position.stall_id} data-x={position.stall_x} data-y={position.stall_y}>
+                {`ID: ${position.stall_id}`}
+              </div>)
+            })}
+
+
+            {/*     <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions[1].stall_x}px, ${positions[1].stall_y}px) rotate(${positions[1].stall_rotation}deg)`, width: `${positions[1].stall_width}px`, height: `${positions[1].stall_height}px` }} id="1" data-x={positions[1].stall_x} data-y={positions[1].stall_y}>
           </div>
           <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions[2].stall_x}px, ${positions[2].stall_y}px) rotate(${positions[2].stall_rotation}deg)`, width: `${positions[2].stall_width}px`, height: `${positions[2].stall_height}px` }} id="2" data-x={positions[2].stall_x} data-y={positions[2].stall_y}>
           </div> */}
-          <img src="http://denverconvention.com/uploads/content/Exhibit_Map.jpg" alt="" />
+            <img src="http://denverconvention.com/uploads/content/Exhibit_Map.jpg" alt="" />
 
+          </div>
+         {/*  <StallInfoDisplay rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} /> */}
+          <SaveButton handleSave={this.handleSave} id={this.props.match.params.event_id} />
         </div>
-        <StallInfoDisplay rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
-        <SaveButton />
-      </div>
     );
   }
 
   componentDidMount() {
-    const {event_id} = this.props.match.params
+    const { event_id } = this.props.match.params
     api.getMapData(event_id)
-    .then((positions) => {
-      this.setState({
-        positions
-      })
-    })
-
-
-  }
-
-  componentDidUpdate(prevProps) {
-    const {event_id} = this.props.match.params
-    if (prevProps !== this.props) {
-      api.getMapData(event_id)
       .then((positions) => {
         this.setState({
           positions
-        }, () => console.log(this.state))
+        })
       })
+  }
+
+  componentDidUpdate(prevProps) {
+    const { event_id } = this.props.match.params
+    if (prevProps !== this.props) {
+      api.getMapData(event_id)
+        .then((positions) => {
+          this.setState({
+            positions
+          })
+        })
     }
+  }
 
-
-
+  handleSave = (id) => {
+    const mapData = this.state.positions
+    api.saveMapData(id, mapData)
   }
 
 
@@ -89,7 +95,7 @@ class Map extends Component {
     let newPositions = { ...state.positions, [icon]: newIconPos }
     this.setState({
       positions: newPositions
-    },() => console.log(this.state))
+    })
   }
 
   resizeListener = (event) => {

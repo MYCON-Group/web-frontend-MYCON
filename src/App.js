@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Map from './components/Map'
-import NavFrame from './components/NavFrame'
-import { Route } from 'react-router-dom'
+import NavFrame from './components/NavFrame';
 
 
 class App extends Component {

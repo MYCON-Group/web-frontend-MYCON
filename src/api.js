@@ -23,3 +23,7 @@ export const getMapData = (id) => {
     .then(({data}) => data.event_stalls)
 }
 
+export const saveMapData = (id, mapData) => {
+    return axios.patch(`${host}/events/${id}/map`, mapData)
+    .then((data) => data)
+}

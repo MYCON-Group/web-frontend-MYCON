@@ -1,6 +1,22 @@
 import React, { Component } from 'react';
 import * as api from '../api.js'
 import {Link } from 'react-router-dom';
+import { Divider, withStyles } from '@material-ui/core'
+
+const styles = () => ({
+  menuItem: {
+    alignItems: 'left',
+    justifyContent: 'flex-start',
+    color: 'black',
+    padding: '1rem 0',
+    textDecoration: 'none',
+    '&:hover': {
+      background: 'grey',
+      opcacity: '0.5'
+    }
+  }
+})
+
 
 class Events extends Component {
 
@@ -10,18 +26,22 @@ class Events extends Component {
 
   render() {
     const { events } = this.state
+    const {classes} = this.props
     return (
-      <ul>
+   <div>
         {events.map(event => {
-          return <Link to={`/map/${event.events_id}`}><li key={event.events_id} >
-            <div>{event.events_name}</div>
-            <div>{event.events_start}</div>
-            <div>{event.events_end}</div>
-            <div>{event.events_description}</div>
+          return <Link to={`/map/${event.events_id}`}>
+          <div className={classes.menuItem} key={event.events_id} >
+            <h5>{event.events_name}</h5>
+            start: {event.events_start} end:{event.events_end}
             <div>{event.events_location}</div>
-          </li></Link>
+          </div>
+          <Divider />
+          </Link>
+ 
+  
         })}
-      </ul>
+      </div>
     );
   }
 
@@ -39,4 +59,4 @@ class Events extends Component {
   }
 }
 
-export default Events;
+export default withStyles(styles)(Events);
