@@ -2,7 +2,7 @@ import React from 'react';
 
 const StallInfoDisplay = ({ rotate, selectedStall, stallName }) => {
   return (
-    stallName ? <div id="info-container" >
+    stallName && selectedStall ? <div id="info-container" >
       <div id="stall-name">{stallName}</div>
       <div id="height">{selectedStall.stall_height}</div>
       <div id="width">{selectedStall.stall_width}</div>

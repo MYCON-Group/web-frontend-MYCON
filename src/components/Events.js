@@ -26,11 +26,11 @@ class Events extends Component {
 
   render() {
     const { events } = this.state
-    const {classes} = this.props
+    const {classes } = this.props
     return (
    <div>
         {events.map(event => {
-          return <Link to={`/map/${event.events_id}`}>
+          return <Link key={event.events_id} to={{pathname:`/map/${event.events_id}`, state: { image: event.events_img}}}>
           <div className={classes.menuItem} key={event.events_id} >
             <h5>{event.events_name}</h5>
             start: {event.events_start} end:{event.events_end}
@@ -38,8 +38,6 @@ class Events extends Component {
           </div>
           <Divider />
           </Link>
- 
-  
         })}
       </div>
     );
@@ -54,7 +52,6 @@ class Events extends Component {
     })
   }
   handleClick = (events_id) => {
-    console.log(`${events_id}`)
     api.getMapData(events_id)
   }
 }

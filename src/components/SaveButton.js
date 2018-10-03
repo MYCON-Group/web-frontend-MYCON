@@ -2,24 +2,26 @@ import React from 'react';
 import { Button, Snackbar, withStyles } from '@material-ui/core'
 import SaveIcon from '@material-ui/icons/Save';
 
-const styles = theme => ({
+const styles = () => ({
     saveBar: {
-        margin: '2vh'
+        marginBottom: '8vh',
     },
     saveButton: {
-        color: 'black'
-    }
+        color: 'white',
+        width: '80px',
+    },
 })
 
 const SaveButton = ({handleSave, id, classes}) => {
     return (
-        <Snackbar anchorOrigin={{vertical:'bottom', horizontal:'right'}} open={true} onClose={this.handleClose} className={classes.saveBar}>
-        
-        <Button className={classes.saveButton} color="secondary" variant="contained" size="small" onClick={() => handleSave(id)}>
+        <div>
+        <Snackbar anchorOrigin={{vertical:'bottom', horizontal:'right'}} open={true} className={classes.saveBar}>
+        <Button className={classes.saveButton} color="primary" variant="contained" size="small" onClick={() => handleSave(id)}>
         <SaveIcon />
         Save
       </Button>
       </Snackbar>
+         </div>
     )
 }
 

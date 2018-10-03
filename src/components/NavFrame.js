@@ -47,7 +47,7 @@ class NavFrame extends React.Component {
             })}
           >
             <div className={classes.drawerHeader} />
-            <div className={classes.map}><Route exact path="/map/:event_id" component={Map} /></div>
+          <div className={classes.map}><Route exact path="/map/:event_id" component={Map} /></div>
           </main>
         </div>
       </div>

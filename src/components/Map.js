@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import StallInfoDisplay from './StallInfoDisplay';
 import SaveButton from './SaveButton';
+import CancelButton from './CancelButton';
 import interact from 'interactjs';
 import * as api from '../api.js'
 import { isEmpty } from 'lodash';
+import StallInfoDisplay from './StallInfoDisplay'
 
 
 class Map extends Component {
@@ -12,12 +13,13 @@ class Map extends Component {
     positions: {}
   }
   render() {
+    console.log(this.props)
     let { positions, selected } = this.state
     return (
       isEmpty(positions) ? null
         :
 
-        <div>
+        <div className="">
           <div className="resize-container">
             {Object.values(positions).map((position) => {
               return (<div key={position.stall_id} className="resize-drag" onClick={this.handleMove}
@@ -28,17 +30,11 @@ class Map extends Component {
                 {`ID: ${position.stall_id}`}
               </div>)
             })}
-
-
-            {/*     <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions[1].stall_x}px, ${positions[1].stall_y}px) rotate(${positions[1].stall_rotation}deg)`, width: `${positions[1].stall_width}px`, height: `${positions[1].stall_height}px` }} id="1" data-x={positions[1].stall_x} data-y={positions[1].stall_y}>
+            <img src={this.props.location.state.image} alt="image not working hombre" />
           </div>
-          <div className="resize-drag" onClick={this.handleMove} style={{ transform: `translate(${positions[2].stall_x}px, ${positions[2].stall_y}px) rotate(${positions[2].stall_rotation}deg)`, width: `${positions[2].stall_width}px`, height: `${positions[2].stall_height}px` }} id="2" data-x={positions[2].stall_x} data-y={positions[2].stall_y}>
-          </div> */}
-            <img src="http://denverconvention.com/uploads/content/Exhibit_Map.jpg" alt="" />
-
-          </div>
-         {/*  <StallInfoDisplay rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} /> */}
+          <StallInfoDisplay rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
           <SaveButton handleSave={this.handleSave} id={this.props.match.params.event_id} />
+          <CancelButton handleCancel={this.handleCancel} />
         </div>
     );
   }
@@ -70,7 +66,15 @@ class Map extends Component {
     api.saveMapData(id, mapData)
   }
 
-
+  handleCancel = () => {
+    const { event_id } = this.props.match.params
+    api.getMapData(event_id)
+      .then((positions) => {
+        this.setState({
+          positions
+        })
+      })
+  }
 
   rotate = (clockwise) => {
     let icon = this.state.selected
