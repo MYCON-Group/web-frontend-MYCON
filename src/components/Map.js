@@ -13,12 +13,10 @@ class Map extends Component {
     positions: {}
   }
   render() {
-    console.log(this.props)
     let { positions, selected } = this.state
     return (
       isEmpty(positions) ? null
         :
-
         <div className="">
           <div className="resize-container">
             {Object.values(positions).map((position) => {
