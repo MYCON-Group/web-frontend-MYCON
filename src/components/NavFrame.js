@@ -75,6 +75,7 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     width: '100%',
+    color: 'white',
   },
   appBar: {
     position: 'absolute',
@@ -109,6 +110,7 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
+    color: 'white',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,

@@ -1,26 +1,20 @@
 import React from 'react';
-import { Button, Snackbar, withStyles } from '@material-ui/core'
+import { Button, withStyles } from '@material-ui/core'
 import Backspace from '@material-ui/icons/Backspace'
 
-const styles = theme => ({
-    cancelBar: {
-        marginBottom: '2vh',
-
-    },
+const styles = () => ({
     cancelButton: {
-        color: 'black',
-        width: '80px'
+        marginBottom: '1rem'
     }
 })
 
 const CancelButton = ({handleCancel, id, classes}) => {
     return (
-        <Snackbar anchorOrigin={{vertical:'bottom', horizontal:'right'}} open={true} className={classes.cancelBar}>
-        <Button className={classes.cancelButton} color="secondary" variant="contained" size="small" onClick={handleCancel}>
+        <div>
+        <Button className={classes.cancelButton} color="secondary" variant="fab" onClick={handleCancel}>
         <Backspace />
-        Cancel
       </Button>
-      </Snackbar>
+      </div>
     )
 }
 

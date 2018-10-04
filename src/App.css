@@ -31,7 +31,6 @@
   border-radius: 1px;
   padding: 1px;
   font-weight: 0;
-  /* margin: 30px 20px; */
   position: absolute;
   width: 50px;
   height: 50px;
@@ -43,32 +42,18 @@ box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
 z-index: 10;
 }
 
-#info-container {
-  color: white;
-  font-size: 20px;
-  font-family: sans-serif;
-  border-radius: 1px;
-  padding: 1px;
-  font-weight: 0;
-  border-radius: 10px;
-  background: grey;
-  position: center;
-  width: 100px;
-  height: 100px;
-    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+.button-panel {
+  position: fixed;
+  top: 40vh;
+  right: 0;
 }
 
 .resize-container {
 
   display: inline-block;
   margin-top: 50px;
-  /* width: 800px;
-  height: 500px; */
   background: white;
-  /* background-image: url("http://denverconvention.com/uploads/content/Exhibit_Map.jpg");
-  background-size: cover; */
+
 }
 
 img {

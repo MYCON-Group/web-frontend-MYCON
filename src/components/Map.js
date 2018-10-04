@@ -4,7 +4,9 @@ import CancelButton from './CancelButton';
 import interact from 'interactjs';
 import * as api from '../api.js'
 import { isEmpty } from 'lodash';
-import StallInfoDisplay from './StallInfoDisplay'
+import RotateButtons from './RotateButtons'
+import AlterSizeButtons from './buttonComponents/AlterSizeButtons'
+import {Divider} from '@material-ui/core'
 
 
 class Map extends Component {
@@ -13,12 +15,11 @@ class Map extends Component {
     positions: {}
   }
   render() {
-    console.log(this.props)
+
     let { positions, selected } = this.state
     return (
       isEmpty(positions) ? null
         :
-
         <div className="">
           <div className="resize-container">
             {Object.values(positions).map((position) => {
@@ -30,11 +31,15 @@ class Map extends Component {
                 {`ID: ${position.stall_id}`}
               </div>)
             })}
-            <img src={this.props.location.state.image} alt="image not working hombre" />
+            <img src={this.props.location.state.image} alt="map" />
           </div>
-          <StallInfoDisplay rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
+          <div className="button-panel">
+          <AlterSizeButtons resize={this.resize} selectedStall={positions[selected]} stallName={selected} />
+          <RotateButtons rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
+          <Divider />
           <SaveButton handleSave={this.handleSave} id={this.props.match.params.event_id} />
           <CancelButton handleCancel={this.handleCancel} />
+          </div>
         </div>
     );
   }
@@ -81,6 +86,18 @@ class Map extends Component {
     const { positions } = this.state
     let newIconPos = { ...positions[icon], stall_rotation: clockwise ? positions[icon].stall_rotation + 10 : positions[icon].stall_rotation - 10 }
     let newPositions = { ...this.state.positions, [icon]: newIconPos }
+    this.setState({
+      positions: newPositions
+    })
+  }
+
+  resize = (direction) => {
+    let icon = this.state.selected
+    const {positions} = this.state
+    let newIconSize = { ...positions[icon], 
+      stall_height: direction ? positions[icon].stall_height *1.1 : positions[icon].stall_height *(1/1.1), 
+      stall_width: direction ? positions[icon].stall_width *1.1 : positions[icon].stall_width *(1/1.1) }
+    let newPositions = { ...this.state.positions, [icon]: newIconSize }
     this.setState({
       positions: newPositions
     })
