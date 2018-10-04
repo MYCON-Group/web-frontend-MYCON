@@ -7,13 +7,13 @@ const styles = () => ({
         margin: '1rem 0'
     }
 })
-const SaveButton = ({ handleSave, id, classes }) => {
+const SaveButton = ({ handleSave, id, classes, selectedStall }) => {
     return (
-        <div>
+        selectedStall ?  <div>
             <Button className={classes.saveButton} color="primary" variant="fab" onClick={() => handleSave(id)}>
                 <SaveIcon />
             </Button>
-        </div>
+        </div> : null
     )
 }
 

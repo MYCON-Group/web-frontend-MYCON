@@ -47,6 +47,7 @@ class NavFrame extends React.Component {
             })}
           >
             <div className={classes.drawerHeader} />
+            <div className={classes.configBar}> configBar</div>
           <div className={classes.map}><Route exact path="/map/:event_id" component={Map} /></div>
           </main>
         </div>
@@ -90,6 +91,9 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+  },
+  configBar:{
+    
   },
   'appBarShift-left': {
     marginLeft: drawerWidth,

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, withStyles } from '@material-ui/core'
 import { Fullscreen, FullscreenExit } from '@material-ui/icons'
 

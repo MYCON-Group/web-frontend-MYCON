@@ -11,10 +11,7 @@ const styles  = theme => ({
 
 const RotateButtons = ({ rotate, selectedStall, stallName, classes }) => {
   return (
-    stallName && selectedStall ? <div id="info-container" >
-      {/* <div id="stall-name">{stallName}</div>
-      <div id="height">{selectedStall.stall_height}</div>
-      <div id="width">{selectedStall.stall_width}</div> */}
+    selectedStall && stallName ? <div id="info-container" >
       <div>
         <Button variant="fab" className={classes.rotateButton} onClick={() => rotate(false)}><RotateLeft /></Button>
         </div>
