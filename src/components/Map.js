@@ -15,7 +15,6 @@ class Map extends Component {
     positions: {}
   }
   render() {
-
     let { positions, selected } = this.state
     return (
       isEmpty(positions) ? null
