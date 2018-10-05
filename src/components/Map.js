@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import SaveButton from './SaveButton';
-import CancelButton from './CancelButton';
+import SaveButton from './buttonComponents/SaveButton';
+import CancelButton from './buttonComponents/CancelButton';
 import interact from 'interactjs';
 import * as api from '../api.js'
 import { isEmpty } from 'lodash';
-import StallInfoDisplay from './StallInfoDisplay'
+import RotateButtons from './buttonComponents/RotateButtons'
+import AlterSizeButtons from './buttonComponents/AlterSizeButtons'
+import Stalls from './Stalls';
+import InputVenueSize from './InputVenueSize';
+import { Divider } from '@material-ui/core';
 
 
 class Map extends Component {
@@ -18,21 +22,23 @@ class Map extends Component {
       isEmpty(positions) ? null
         :
         <div className="">
+        <InputVenueSize selectedStall={positions[selected]} stallName={selected} pWidth={this.props.location.state.width} pHeight={this.props.location.state.height} />
           <div className="resize-container">
             {Object.values(positions).map((position) => {
-              return (<div key={position.stall_id} className="resize-drag" onClick={this.handleMove}
-                style={{
-                  transform: `translate(${position.stall_x}px, ${position.stall_y}px) rotate(${position.stall_rotation}deg)`,
-                  width: `${position.stall_width}px`, height: `${position.stall_height}px`
-                }} id={position.stall_id} data-x={position.stall_x} data-y={position.stall_y}>
-                {`ID: ${position.stall_id}`}
-              </div>)
+              return (
+                <Stalls key={position.stall_id} position={position} handleMove={this.handleMove} />
+              )
             })}
-            <img src={this.props.location.state.image} alt="image not working hombre" />
+            <img src={this.props.location.state.image} alt="map" />
           </div>
-          <StallInfoDisplay rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
-          <SaveButton handleSave={this.handleSave} id={this.props.match.params.event_id} />
-          <CancelButton handleCancel={this.handleCancel} />
+          
+          <div className="button-panel">
+            <AlterSizeButtons resize={this.resize} selectedStall={positions[selected]} stallName={selected} />
+            <RotateButtons rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
+            <Divider />
+            <SaveButton handleSave={this.handleSave} id={this.props.match.params.event_id} selectedStall={positions[selected]} />
+            <CancelButton handleCancel={this.handleCancel} selectedStall={positions[selected]} />
+          </div>
         </div>
     );
   }
@@ -79,6 +85,20 @@ class Map extends Component {
     const { positions } = this.state
     let newIconPos = { ...positions[icon], stall_rotation: clockwise ? positions[icon].stall_rotation + 10 : positions[icon].stall_rotation - 10 }
     let newPositions = { ...this.state.positions, [icon]: newIconPos }
+    this.setState({
+      positions: newPositions
+    })
+  }
+
+  resize = (direction) => {
+    let icon = this.state.selected
+    const { positions } = this.state
+    let newIconSize = {
+      ...positions[icon],
+      stall_height: direction ? positions[icon].stall_height * 1.1 : positions[icon].stall_height * (1 / 1.1),
+      stall_width: direction ? positions[icon].stall_width * 1.1 : positions[icon].stall_width * (1 / 1.1)
+    }
+    let newPositions = { ...this.state.positions, [icon]: newIconSize }
     this.setState({
       positions: newPositions
     })

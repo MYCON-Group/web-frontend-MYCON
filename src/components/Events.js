@@ -17,7 +17,6 @@ const styles = () => ({
   }
 })
 
-
 class Events extends Component {
 
   state = {
@@ -30,7 +29,7 @@ class Events extends Component {
     return (
    <div>
         {events.map(event => {
-          return <Link key={event.events_id} to={{pathname:`/map/${event.events_id}`, state: { image: event.events_img}}}>
+          return <Link key={event.events_id} to={{pathname:`/map/${event.events_id}`, state: { image: event.events_img, height: event.events_map_height, width: event.events_map_width }}}>
           <div className={classes.menuItem} key={event.events_id} >
             <h5>{event.events_name}</h5>
             start: {event.events_start} end:{event.events_end}
