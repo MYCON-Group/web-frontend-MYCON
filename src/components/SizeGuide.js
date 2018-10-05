@@ -1,13 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class SizeGuide extends Component {
     render() {
-        console.log(this.props)
-        const { selectedStall, stallName, pHeight } = this.props
+        const { selectedStall, stallName, pHeight, spaceWidth } = this.props
         if (selectedStall && stallName) {
             let stallWidth = selectedStall.stall_width
             let stallHeight = selectedStall.stall_height
-            let scale = (this.props.spaceWidth / pHeight)
+            let scale = (spaceWidth / pHeight)
             let lineMetersX = stallWidth * scale
             let lineMetersY = stallHeight * scale
             return (

@@ -1,58 +1,65 @@
-import React, { Component } from 'react';
-import SizeGuide from './SizeGuide';
+import React from 'react';
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, AppBar } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
+import { MainContext } from './NavFrame';
 
+const drawerWidth = 340;
 const styles = theme => ({
     root: {
       display: 'flex',
       flexWrap: 'wrap',
     },
+    textField: {
+        width: '50vw',
+        height: '1rem'
+    },
     margin: {
       margin: theme.spacing.unit,
     },
-    textField: {
-      flexBasis: 200,
-    },
-    venueSizeInput: {
-        display: 'block',
-        marginTop: '3vh',
-        justifyContent: 'left',
-        right: 0
-    },
+    appBar: {
+        position: 'absolute',
+        marginTop: '8vh',
+        transition: theme.transitions.create(['margin', 'width'], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+      },
+      appBarShift: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['margin', 'width'], {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      },
+      'appBarShift-left': {
+        marginLeft: drawerWidth,
+      },
   });
 
-class InputVenueSize extends Component {
-    state = {
-        eventSpaceWidth: 100
-    }
-
-    render() {
-        const {classes} = this.props
+const InputVenueSize = ({classes, handleVenueSize}) => {
         return (
-            <div className={classes.venueSizeInput}>
-            <TextField
-          id="outlined-simple-start-adornment"
-          className={classNames(classes.margin, classes.textField)}
-          variant="outlined"
-          label="Enter venue length in metres"
-          onChange={this.handleChange}
-          InputProps={{
-            startAdornment: <InputAdornment position="start">m</InputAdornment>,
-          }}
-        />
-            <SizeGuide selectedStall={this.props.selectedStall} stallName={this.props.stallName} pWidth={this.props.pWidth} pHeight={this.props.pHeight} spaceWidth={this.state.eventSpaceWidth} />
-        </div>
+            <MainContext.Consumer>
+           {(context) => (
+                <AppBar className={classNames(classes.appBar, {
+                    [classes.appBarShift]: context.state.open,
+                    [classes[`appBarShift-left`]]: context.state.open,
+                  })}>
+            <textarea
+              id="outlined-simple-start-adornment"
+              className={classNames(classes.margin, classes.textField)}
+              variant="outlined"
+              placeholder="enter venue length in metres"
+              onChange={handleVenueSize}
+              InputProps={{
+                startAdornment: <InputAdornment position="start">m</InputAdornment>,
+              }}
+            /> 
+            </AppBar>
+           )}
+        </MainContext.Consumer>
         )
-    }
-
-    handleChange = (event) => {
-        this.setState({
-            eventSpaceWidth: event.target.value
-        })
-    }
 }
 
 export default withStyles(styles)(InputVenueSize); 

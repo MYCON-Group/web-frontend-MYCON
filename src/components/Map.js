@@ -7,14 +7,15 @@ import { isEmpty } from 'lodash';
 import RotateButtons from './buttonComponents/RotateButtons'
 import AlterSizeButtons from './buttonComponents/AlterSizeButtons'
 import Stalls from './Stalls';
-import InputVenueSize from './InputVenueSize';
 import { Divider } from '@material-ui/core';
-
+import SizeGuide from './SizeGuide';
+import InputVenueSize from './InputVenueSize'
 
 class Map extends Component {
   state = {
     selected: '',
-    positions: {}
+    positions: {},
+    eventSpaceHeight: 0
   }
   render() {
     let { positions, selected } = this.state
@@ -22,17 +23,18 @@ class Map extends Component {
       isEmpty(positions) ? null
         :
         <div className="">
-        <InputVenueSize selectedStall={positions[selected]} stallName={selected} pWidth={this.props.location.state.width} pHeight={this.props.location.state.height} />
           <div className="resize-container">
             {Object.values(positions).map((position) => {
               return (
-                <Stalls key={position.stall_id} position={position} handleMove={this.handleMove} />
+                <Stalls key={position.stall_id}   position={position} handleMove={this.handleMove}
+                pWidth={this.props.location.state.width}  />
               )
             })}
             <img src={this.props.location.state.image} alt="map" />
           </div>
-          
+          <InputVenueSize handleVenueSize={this.handleVenueSize} />
           <div className="button-panel">
+          <SizeGuide selectedStall={positions[selected]} stallName={selected} spaceWidth={this.state.eventSpaceHeight}  pHeight={this.props.location.state.height} />
             <AlterSizeButtons resize={this.resize} selectedStall={positions[selected]} stallName={selected} />
             <RotateButtons rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
             <Divider />
@@ -64,6 +66,12 @@ class Map extends Component {
         })
     }
   }
+
+  handleVenueSize = (event) => {
+    this.setState({
+        eventSpaceHeight: event.target.value
+    })
+}
 
   handleSave = (id) => {
     const mapData = this.state.positions
