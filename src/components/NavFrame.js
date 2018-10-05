@@ -47,10 +47,12 @@ class NavFrame extends React.Component {
             })}
           >
             <div className={classes.drawerHeader} />
-            <div className={classes.configBar}> configBar</div>
+
           <div className={classes.map}><Route exact path="/map/:event_id" component={Map} /></div>
           </main>
+          <AppBar className={classes.configBar}> configBar</AppBar>
         </div>
+  
       </div>
     );
   }
@@ -93,7 +95,11 @@ const styles = theme => ({
     }),
   },
   configBar:{
-    
+    marginTop: '8vh',
+    position: 'absolute',
+    height: '4vh',
+    backgroundColor: 'white',
+    color: 'black'
   },
   'appBarShift-left': {
     marginLeft: drawerWidth,
@@ -112,9 +118,9 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
     color: 'white',
+    backgroundColor: 'white',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,

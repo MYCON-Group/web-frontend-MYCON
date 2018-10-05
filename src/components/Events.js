@@ -17,7 +17,6 @@ const styles = () => ({
   }
 })
 
-
 class Events extends Component {
 
   state = {
