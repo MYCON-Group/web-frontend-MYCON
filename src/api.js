@@ -24,6 +24,21 @@ export const getMapData = (id) => {
 }
 
 export const saveMapData = (id, mapData) => {
+    mapData = Object.values(mapData).reduce((accum, stall) => {
+        let newObj = {
+            event_stalls_id: stall.event_stalls_id,
+            stall_x: stall.stall_x,
+            stall_y: stall.stall_y,
+            stall_height: stall.stall_height,
+            stall_width: stall.stall_width,
+            stall_rotation: stall.stall_rotation,
+            events_id: stall.events_id,
+            stall_id: stall.stall_id
+        } 
+        accum[stall.stall_id] = newObj
+        return accum
+    }, {})
     return axios.patch(`${host}/events/${id}/map`, mapData)
     .then((data) => data)
 }
+
