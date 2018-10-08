@@ -5,11 +5,11 @@ import { MainContext } from './NavFrame';
 
 const styles = () => ({
   menuItem: {
-    alignItems: 'left',
-    justifyContent: 'flex-start',
+    textAlign: 'left',
     color: 'black',
     padding: '1rem 0',
     textDecoration: 'none',
+    fontStyle: 'Montserrat',
     '&:hover': {
       background: 'grey',
       opcacity: '0.5'
@@ -25,7 +25,6 @@ class Events extends Component {
       <MainContext.Consumer>
         {(context) => (
           context.state.events.map(event => {
-            console.log(event)
             return <Link key={event.events_id} to={{ pathname: `/map/${event.events_id}`, state: { image: event.events_img, height: event.events_map_height, width: event.events_map_width }}}>
               <div className={classes.menuItem} key={event.events_id} >
                 <h5>{event.events_name}</h5>

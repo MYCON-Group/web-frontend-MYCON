@@ -134,7 +134,6 @@ class Map extends Component {
     this.setState({
       positions: newPositions
     })
-    // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
   }
 
   handleMove = (id) => {

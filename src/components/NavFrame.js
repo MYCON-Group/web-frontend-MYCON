@@ -121,9 +121,8 @@ const styles = theme => ({
     display: 'none',
   },
   title: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end'
+    display: 'inline-block',
+    textAlign: 'center'
   },
   content: {
     flexGrow: 1,
