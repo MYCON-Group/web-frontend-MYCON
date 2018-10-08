@@ -8,8 +8,7 @@ import RotateButtons from './buttonComponents/RotateButtons'
 import AlterSizeButtons from './buttonComponents/AlterSizeButtons'
 import Stalls from './Stalls';
 import { Divider } from '@material-ui/core';
-import SizeGuide from './SizeGuide';
-import InputVenueSize from './InputVenueSize'
+import StallSizeParams from './StallSizeParams'
 
 class Map extends Component {
   state = {
@@ -26,15 +25,14 @@ class Map extends Component {
           <div className="resize-container">
             {Object.values(positions).map((position) => {
               return (
-                <Stalls key={position.stall_id}   position={position} handleMove={this.handleMove}
-                pWidth={this.props.location.state.width}  />
+                <Stalls key={position.stall_id} position={position} handleMove={this.handleMove}
+                  pWidth={this.props.location.state.width} />
               )
             })}
             <img src={this.props.location.state.image} alt="map" />
           </div>
-          <InputVenueSize handleVenueSize={this.handleVenueSize} />
+          <StallSizeParams handleVenueSize={this.handleVenueSize} selectedStall={positions[selected]} stallName={selected} spaceWidth={this.state.eventSpaceHeight} pHeight={this.props.location.state.height} />
           <div className="button-panel">
-          <SizeGuide selectedStall={positions[selected]} stallName={selected} spaceWidth={this.state.eventSpaceHeight}  pHeight={this.props.location.state.height} />
             <AlterSizeButtons resize={this.resize} selectedStall={positions[selected]} stallName={selected} />
             <RotateButtons rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
             <Divider />
@@ -69,9 +67,9 @@ class Map extends Component {
 
   handleVenueSize = (event) => {
     this.setState({
-        eventSpaceHeight: event.target.value
+      eventSpaceHeight: event.target.value
     })
-}
+  }
 
   handleSave = (id) => {
     const mapData = this.state.positions
@@ -139,9 +137,9 @@ class Map extends Component {
     // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
   }
 
-  handleMove = (event) => {
+  handleMove = (id) => {
     this.setState({
-      selected: event.target.id
+      selected: id
     })
     interact(".resize-drag")
       .draggable({

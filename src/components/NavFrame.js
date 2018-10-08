@@ -96,6 +96,7 @@ const styles = theme => ({
   },
   appBar: {
     position: 'absolute',
+    display: 'block',
     zIndex: 2,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
