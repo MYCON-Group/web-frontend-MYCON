@@ -32,7 +32,7 @@ class Map extends Component {
             })}
             <img src={this.props.location.state.image} alt="map" className="img" />
           </div>
-          {selected && <SizeGuide selectedStall={positions[selected]} spaceWidth={this.state.eventSpaceHeight} pHeight={this.props.location.state.height} />}
+          {positions[selected] && <SizeGuide selectedStall={positions[selected]} spaceWidth={this.state.eventSpaceHeight} pHeight={this.props.location.state.height} />}
           <div className="button-panel">
             <AlterSizeButtons resize={this.resize} selectedStall={positions[selected]} stallName={selected} />
             <RotateButtons rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
