@@ -19,8 +19,8 @@ export const fetchEvents = () => {
 }
 
 export const getMapData = (id) => {
-    return axios.get(`${host}/events/${id}/map`)
-    .then(({data}) => data.event_stalls)
+    return axios.get(`${host}/events/${id}/stalls`)
+    .then(({data}) => data.stalls)
 }
 
 export const saveMapData = (id, mapData) => {

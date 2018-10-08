@@ -4,23 +4,12 @@ import NavFrame from './components/NavFrame';
 
 
 class App extends Component {
-
-  state = {
-   
-  }
-
   render() {
     return (
       <div className="App">
-        <NavFrame />
-
-        {/* <StallInfoDisplay rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} /> */}
+          <NavFrame />
       </div>
     );
-  }
-
-  componentDidMount() {
-
   }
 }
 

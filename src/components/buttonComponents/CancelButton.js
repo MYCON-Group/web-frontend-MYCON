@@ -8,7 +8,7 @@ const styles = () => ({
     }
 })
 
-const CancelButton = ({handleCancel, id, classes, selectedStall}) => {
+const CancelButton = ({handleCancel, classes, selectedStall}) => {
     return (
         selectedStall ? <div>
         <Button className={classes.cancelButton} color="secondary" variant="fab" onClick={handleCancel}>
