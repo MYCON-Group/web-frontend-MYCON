@@ -8,20 +8,21 @@ import RotateButtons from './buttonComponents/RotateButtons'
 import AlterSizeButtons from './buttonComponents/AlterSizeButtons'
 import Stalls from './Stalls';
 import { Divider } from '@material-ui/core';
-import StallSizeParams from './StallSizeParams'
+import SizeGuide from './SizeGuide'
 
 class Map extends Component {
   state = {
     selected: '',
     positions: {},
-    eventSpaceHeight: 0
+    eventSpaceHeight: 500,
+    saved: true
   }
   render() {
-    let { positions, selected } = this.state
+    let { positions, selected, saved } = this.state
     return (
       isEmpty(positions) ? null
         :
-        <div className="">
+        <React.Fragment>
           <div className="resize-container">
             {Object.values(positions).map((position) => {
               return (
@@ -29,17 +30,17 @@ class Map extends Component {
                   pWidth={this.props.location.state.width} />
               )
             })}
-            <img src={this.props.location.state.image} alt="map" />
+            <img src={this.props.location.state.image} alt="map" className="img" />
           </div>
-          <StallSizeParams handleVenueSize={this.handleVenueSize} selectedStall={positions[selected]} stallName={selected} spaceWidth={this.state.eventSpaceHeight} pHeight={this.props.location.state.height} />
+          {selected && <SizeGuide selectedStall={positions[selected]} spaceWidth={this.state.eventSpaceHeight} pHeight={this.props.location.state.height} />}
           <div className="button-panel">
             <AlterSizeButtons resize={this.resize} selectedStall={positions[selected]} stallName={selected} />
             <RotateButtons rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
             <Divider />
-            <SaveButton handleSave={this.handleSave} id={this.props.match.params.event_id} selectedStall={positions[selected]} />
+            <SaveButton handleSave={this.handleSave} id={this.props.match.params.event_id} selectedStall={positions[selected]} savedFeedback={saved} />
             <CancelButton handleCancel={this.handleCancel} selectedStall={positions[selected]} />
           </div>
-        </div>
+        </React.Fragment>
     );
   }
 
@@ -74,6 +75,11 @@ class Map extends Component {
   handleSave = (id) => {
     const mapData = this.state.positions
     api.saveMapData(id, mapData)
+    .then((data) => {
+      this.setState({
+        saved: true
+      })
+    })  
   }
 
   handleCancel = () => {
@@ -81,7 +87,8 @@ class Map extends Component {
     api.getMapData(event_id)
       .then((positions) => {
         this.setState({
-          positions
+          positions,
+          saved: true
         })
       })
   }
@@ -92,7 +99,8 @@ class Map extends Component {
     let newIconPos = { ...positions[icon], stall_rotation: clockwise ? positions[icon].stall_rotation + 10 : positions[icon].stall_rotation - 10 }
     let newPositions = { ...this.state.positions, [icon]: newIconPos }
     this.setState({
-      positions: newPositions
+      positions: newPositions,
+      saved: false
     })
   }
 
@@ -106,7 +114,8 @@ class Map extends Component {
     }
     let newPositions = { ...this.state.positions, [icon]: newIconSize }
     this.setState({
-      positions: newPositions
+      positions: newPositions,
+      saved: false
     })
   }
 
@@ -122,7 +131,8 @@ class Map extends Component {
     let newIconPos = { ...state.positions[icon], stall_x, stall_y }
     let newPositions = { ...state.positions, [icon]: newIconPos }
     this.setState({
-      positions: newPositions
+      positions: newPositions,
+      saved: false
     })
   }
 
@@ -132,7 +142,8 @@ class Map extends Component {
     let newIconPos = { ...positions[icon], stall_width: event.rect.width, stall_height: event.rect.height }
     let newPositions = { ...positions, [icon]: newIconPos }
     this.setState({
-      positions: newPositions
+      positions: newPositions,
+      saved: false
     })
   }
 

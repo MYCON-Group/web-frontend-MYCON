@@ -1,5 +1,5 @@
 import axios from 'axios';
-const host = 'http://localhost:9090/api';
+const host = 'http://18.130.80.91:443/api';
 
 export const withErrorHandling = (func) => {
     return function (...args) {
@@ -39,6 +39,6 @@ export const saveMapData = (id, mapData) => {
         return accum
     }, {})
     return axios.patch(`${host}/events/${id}/map`, mapData)
-    .then((data) => data)
+    .then(({data}) => data)
 }
 

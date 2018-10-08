@@ -14,6 +14,9 @@ const styles = () => ({
       background: 'grey',
       opcacity: '0.5'
     }
+  },
+  dates: {
+    fontSize: '12px'
   }
 })
 
@@ -27,8 +30,8 @@ class Events extends Component {
           context.state.events.map(event => {
             return <Link key={event.events_id} to={{ pathname: `/map/${event.events_id}`, state: { image: event.events_img, height: event.events_map_height, width: event.events_map_width }}}>
               <div className={classes.menuItem} key={event.events_id} >
-                <h5>{event.events_name}</h5>
-                start: {event.events_start} end:{event.events_end}
+                <h6>{event.events_name}</h6>
+                <p className={classes.dates}>start: {event.events_start} end:{event.events_end}</p>
                 <div>{event.events_location}</div>
               </div>
               <Divider />

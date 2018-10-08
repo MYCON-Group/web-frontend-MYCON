@@ -56,12 +56,13 @@ z-index: 10;
 .resize-container {
   display: inline-block;
   background: white;
-   margin-top: 11vh;
+  margin-top: 8vh;
 }
 
-img {
+.img {
   height: 100%;
   z-index: 0;
+  pointer-events: none;
 } 
 
 .nav-item {
