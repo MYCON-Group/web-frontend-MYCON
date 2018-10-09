@@ -8,7 +8,7 @@ import RotateButtons from './buttonComponents/RotateButtons'
 import AlterSizeButtons from './buttonComponents/AlterSizeButtons'
 import Stalls from './Stalls';
 import { Divider } from '@material-ui/core';
-import SizeGuide from './SizeGuide'
+import SizeGuide from './SizeGuide';
 
 class Map extends Component {
   state = {
@@ -32,7 +32,8 @@ class Map extends Component {
             })}
             <img src={this.props.location.state.image} alt="map" className="img" />
           </div>
-          {positions[selected] && <SizeGuide selectedStall={positions[selected]} spaceWidth={this.state.eventSpaceHeight} pHeight={this.props.location.state.height} />}
+          {positions[selected] && <SizeGuide selectedStall={positions[selected]} spaceWidth={this.props.location.state.actualWidth} pWidth={this.props.location.state.width} />}
+          <Divider />
           <div className="button-panel">
             <AlterSizeButtons resize={this.resize} selectedStall={positions[selected]} stallName={selected} />
             <RotateButtons rotate={this.rotate} selectedStall={positions[selected]} stallName={selected} />
@@ -161,7 +162,7 @@ class Map extends Component {
       })
       .resizable({
         // resize from all edges and corners
-        edges: { left: false, right: true, bottom: true, top: false },
+        edges: { left: true, right: true, bottom: true, top: true },
 
         // keep the edges inside the parent
         restrictEdges: {

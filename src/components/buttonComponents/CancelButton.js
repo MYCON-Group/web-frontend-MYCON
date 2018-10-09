@@ -6,8 +6,7 @@ const styles = () => ({
     cancelButton: {
         marginBottom: '1rem',
         '&:hover': {
-            background: 'red',
-            opacity: '20%',
+            background: 'secondary',
         }
 
     }
