@@ -4,14 +4,18 @@ import Backspace from '@material-ui/icons/Backspace'
 
 const styles = () => ({
     cancelButton: {
-        marginBottom: '1rem'
+        marginBottom: '1rem',
+        '&:hover': {
+            background: 'secondary',
+        }
+
     }
 })
 
 const CancelButton = ({handleCancel, classes, selectedStall}) => {
     return (
         selectedStall ? <div>
-        <Button className={classes.cancelButton} color="secondary" variant="fab" onClick={handleCancel}>
+        <Button className={classes.cancelButton} variant="fab" onClick={handleCancel}>
         <Backspace />
       </Button>
       </div> : null

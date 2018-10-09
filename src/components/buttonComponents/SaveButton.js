@@ -7,10 +7,10 @@ const styles = () => ({
         margin: '1rem 0'
     }
 })
-const SaveButton = ({ handleSave, id, classes, selectedStall }) => {
+const SaveButton = ({ handleSave, id, classes, selectedStall, savedFeedback }) => {
     return (
         selectedStall ?  <div>
-            <Button className={classes.saveButton} color="primary" variant="fab" onClick={() => handleSave(id)}>
+            <Button className={classes.saveButton} color={savedFeedback ? null : "secondary"} variant="fab" onClick={() => handleSave(id)}>
                 <SaveIcon />
             </Button>
         </div> : null

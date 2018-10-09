@@ -32,7 +32,7 @@ class NavFrame extends React.Component {
             >
               <Toolbar disableGutters={!open}>
                 <IconButton
-                  color="inherit"
+                  color="#536DFE"
                   aria-label="Open drawer"
                   onClick={this.handleDrawerOpen}
                   className={classNames(classes.menuButton, open && classes.hide)}
@@ -40,7 +40,7 @@ class NavFrame extends React.Component {
                   <MenuIcon />
                 </IconButton>
                 <div className={classes.title}>
-                  <Typography variant="title" color="inherit" noWrap>
+                  <Typography variant="title" color="black" noWrap>
                     MYCON Venue Manager Workspace
               </Typography>
                 </div>
@@ -81,7 +81,7 @@ class NavFrame extends React.Component {
 
 }
 
-const drawerWidth = 340;
+const drawerWidth = 320;
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -92,11 +92,13 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     width: '100%',
-    color: 'white',
+    color: '#212121',
   },
   appBar: {
     position: 'absolute',
     display: 'block',
+    backgroundColor: '#1976D2',
+    textColor: '#212121',
     zIndex: 2,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
@@ -127,7 +129,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    color: 'white',
+    color: '#212121',
     backgroundColor: 'white',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
