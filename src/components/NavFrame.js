@@ -39,11 +39,9 @@ class NavFrame extends React.Component {
                 >
                   <MenuIcon />
                 </IconButton>
-                <div className={classes.title}>
-                  <Typography variant="title" color="black" noWrap>
-                    MYCON Venue Manager Workspace
+                  <Typography align='center' className={classes.title} variant="title" color="black" noWrap>
+                    Eviivent venue manager workspace
               </Typography>
-                </div>
               </Toolbar>
             </AppBar>
             <DrawerPanel open={open} handleDrawerClose={this.handleDrawerClose} />
@@ -52,6 +50,7 @@ class NavFrame extends React.Component {
                 [classes.contentShift]: open,
                 [classes[`contentShift-left`]]: open,
               })}
+              background="logo_transparent.png"
             >
               <div className={classes.drawerHeader} />
               <div className={classes.map}><Route exact path="/map/:event_id" component={Map} /></div>
@@ -85,6 +84,9 @@ const drawerWidth = 320;
 const styles = theme => ({
   root: {
     flexGrow: 1,
+  },
+  logo: {
+    zIndex: 0
   },
   appFrame: {
     zIndex: 2,
@@ -123,8 +125,8 @@ const styles = theme => ({
     display: 'none',
   },
   title: {
-    display: 'inline-block',
-    textAlign: 'center'
+    textAlign: 'center',
+    textSpacing: '1px'
   },
   content: {
     flexGrow: 1,
