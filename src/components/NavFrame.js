@@ -6,6 +6,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Map from './Map';
 import DrawerPanel from './DrawerPanel';
 import * as api from '../api.js'
+import title from './eviivent_name.png'
+import logo from './eviivent_logo.png'
 
 export const MainContext = React.createContext();
 
@@ -40,7 +42,8 @@ class NavFrame extends React.Component {
                   <MenuIcon />
                 </IconButton>
                   <Typography align='center' className={classes.title} variant="title" color="black" noWrap>
-                    Eviivent venue manager workspace
+             <img src={title} alt="eviivent title" className={classes.logoTitle} />
+                    <img src={logo} alt="eviiventlogo" className={classes.logo} />
               </Typography>
               </Toolbar>
             </AppBar>
@@ -86,7 +89,12 @@ const styles = theme => ({
     flexGrow: 1,
   },
   logo: {
-    zIndex: 0
+    height: '4rem',
+  },
+  logoTitle: {
+    marginLeft: '18rem',
+    height: '5rem',
+    width: 'auto',
   },
   appFrame: {
     zIndex: 2,
@@ -123,10 +131,6 @@ const styles = theme => ({
   },
   hide: {
     display: 'none',
-  },
-  title: {
-    textAlign: 'center',
-    textSpacing: '1px'
   },
   content: {
     flexGrow: 1,
