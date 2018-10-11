@@ -1,8 +1,9 @@
 import React from 'react'
+import logo from './eviivent_logo.png'
 
 const SplashPage = () => {
     return (
-        <img className="logo" src="logo_transparent.png" alt="eviicon logo"/>
+        <img className="logo" src={logo} alt="eviicon logo"/>
     )
 }
 
